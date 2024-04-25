@@ -62,34 +62,29 @@
     }
   }
 </script>
-<div>
-    <div>
-        <span>Input old holding</span>
-        <input type="file" placeholder="Enter old holding" on:change={onChange.bind(null, "old")} />
-    </div>
-    <div>
-        <span>Input new holding</span>
-        <input type="file" placeholder="Enter new holding" on:change={onChange.bind(null, "new")} />
-    </div>
-    <table id="table-holding" class="display" style="width:100%">
-      <thead>
-        <tr>
-          <th>Symbol</th>
-          <th>Change</th>
-          <th>Change Perct</th>
-        </tr>
-      </thead>
-      <tbody />
-    <!-- {#if bOldData && bNewData}
-        {#each Object.values(holdingsData) as holding}
-          {#if holding["Change"] !== undefined}
-            <tr>
-              <td>{holding["Symbol"]}</td>
-              <td>{holding["Change"]}</td>
-              <td>{holding["Change Perct"]}</td>
-            </tr>
-          {/if}
-        {/each}
-    {/if} -->
+<div class="p-4">
+  <div class="grid grid-cols-2 gap-4 mb-4">
+    <label class="form-control w-full max-w-xs">
+      <div class="label">
+        <span class="label-text">Input old holding</span>
+      </div>
+      <input type="file" class="file-input file-input-bordered w-full max-w-xs" placeholder="Enter old holding" on:change={onChange.bind(null, "old")} />
+    </label>
+    <label class="form-control w-full max-w-xs">
+      <div class="label">
+        <span class="label-text">Input new holding</span>
+      </div>
+      <input type="file" class="file-input file-input-bordered w-full max-w-xs" placeholder="Enter new holding" on:change={onChange.bind(null, "new")} />
+    </label>
+  </div>
+  <table id="table-holding" class="display" style="width:100%">
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Change</th>
+        <th>Change Perct</th>
+      </tr>
+    </thead>
+    <tbody />
   </table>
 </div>
