@@ -1,9 +1,12 @@
 <script lang="ts">
   import Papa from 'papaparse';
+  import DataTable from 'datatables.net-dt';
+  import { onMount } from 'svelte';
 
   let bOldData = false;
   let bNewData = false;
   let holdingsData: any = {};
+  let table: any;
 
   function onChange(data: string, event: Event) {
     const element = event.target as HTMLInputElement;  
@@ -42,6 +45,22 @@
       },
     });   
   }
+
+  onMount(() => {
+    table = new DataTable("#table-holding");
+  });
+
+  $: {
+    if (bOldData && bNewData) {
+      table.clear();
+      Object.values(holdingsData).forEach((holding: any) => {
+        if (holding["Change"] !== undefined) {
+          table.row.add([holding["Symbol"], holding["Change"], holding["Change Perct"]]);
+        }
+      });
+      table.draw();
+    }
+  }
 </script>
 <div>
     <div>
@@ -52,15 +71,25 @@
         <span>Input new holding</span>
         <input type="file" placeholder="Enter new holding" on:change={onChange.bind(null, "new")} />
     </div>
-    {#if bOldData && bNewData}
-      <table>
+    <table id="table-holding" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Change</th>
+          <th>Change Perct</th>
+        </tr>
+      </thead>
+      <tbody />
+    <!-- {#if bOldData && bNewData}
         {#each Object.values(holdingsData) as holding}
-          <tr>
-            <td>{holding["Symbol"]}</td>
-            <td>{holding["Change"]}</td>
-            <td>{holding["Change Perct"]}</td>
-          </tr>
+          {#if holding["Change"] !== undefined}
+            <tr>
+              <td>{holding["Symbol"]}</td>
+              <td>{holding["Change"]}</td>
+              <td>{holding["Change Perct"]}</td>
+            </tr>
+          {/if}
         {/each}
-      </table>
-    {/if}
+    {/if} -->
+  </table>
 </div>
